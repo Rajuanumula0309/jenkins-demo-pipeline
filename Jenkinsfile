@@ -7,7 +7,7 @@ pipeline {
     }
 
     triggers {
-        pollSCM('H/5 *')  // every 5 minutes GitHub check chestundi
+        pollSCM('H/5 *')  // ✅ every 5 minutes GitHub check
     }
 
     stages {
@@ -31,12 +31,6 @@ pipeline {
             steps {
                 bat 'echo Deploying to PROD Server'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline Finished'
         }
     }
 }
