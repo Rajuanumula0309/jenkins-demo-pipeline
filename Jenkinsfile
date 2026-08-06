@@ -7,32 +7,42 @@ pipeline {
     }
 
     triggers {
-        pollSCM('H/5 *')  // every 5 minutes Git check chestundi
-        // Leka
-        // cron('H */4 * * *')  // every 4 hours build chestundi
+        cron('H */4 *')  // every 4 hours dev and main rendu auto build avutundi
     }
 
     stages {
         stage('1. Build') {
             steps {
+                echo 'Starting Build...'
                 bat 'mvn clean package'
             }
         }
-        stage('2. Deploy') {
+        stage('2. Deploy to DEV') {
             when {
                 branch 'dev'
             }
             steps {
-                bat 'echo Deploying to DEV Server'
+                echo 'Deploying to DEV Server'
+                bat 'echo Deployment to DEV Completed'
             }
         }
-        stage('3. Deploy') {
+        stage('3. Deploy to PROD') {
             when {
                 branch 'main'
             }
             steps {
-                bat 'echo Deploying to PROD Server'
+                echo 'Deploying to PROD Server'
+                bat 'echo Deployment to PROD Completed'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline Finished Successfully ✅'
+        }
+        failure {
+            echo 'Pipeline Failed ❌'
         }
     }
 }
