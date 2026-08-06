@@ -7,7 +7,7 @@ pipeline {
     }
 
     triggers {
-        cron('H */4 * *')  // every 4 hours
+        cron('H */4 * * *')  // 5 * undali mama - every 4 hours
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
-        stage('2. Deploy') {
+        stage('2. Deploy to DEV') {
             when {
                 branch 'dev'
             }
@@ -24,13 +24,19 @@ pipeline {
                 bat 'echo Deploying to DEV Server'
             }
         }
-        stage('3. Deploy') {
+        stage('3. Deploy to PROD') {
             when {
                 branch 'main'
             }
             steps {
                 bat 'echo Deploying to PROD Server'
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline Finished'
         }
     }
 }
