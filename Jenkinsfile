@@ -3,6 +3,9 @@ pipeline {
     tools {
         maven 'Maven3'  // Jenkins lo ee name undali
         jdk 'JDK17'
+    } 
+    trigger {
+         cron ('H */4 * * *')
     }
     stages {
         stage('1. Build') {  // <-- ee stage add chey
