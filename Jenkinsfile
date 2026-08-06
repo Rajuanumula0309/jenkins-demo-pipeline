@@ -7,42 +7,30 @@ pipeline {
     }
 
     triggers {
-        cron('H */4 *')  // every 4 hours dev and main rendu auto build avutundi
+        cron('H */4 * *')  // every 4 hours
     }
 
     stages {
         stage('1. Build') {
             steps {
-                echo 'Starting Build...'
                 bat 'mvn clean package'
             }
         }
-        stage('2. Deploy to DEV') {
+        stage('2. Deploy') {
             when {
                 branch 'dev'
             }
             steps {
-                echo 'Deploying to DEV Server'
-                bat 'echo Deployment to DEV Completed'
+                bat 'echo Deploying to DEV Server'
             }
         }
-        stage('3. Deploy to PROD') {
+        stage('3. Deploy') {
             when {
                 branch 'main'
             }
             steps {
-                echo 'Deploying to PROD Server'
-                bat 'echo Deployment to PROD Completed'
+                bat 'echo Deploying to PROD Server'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline Finished Successfully ✅'
-        }
-        failure {
-            echo 'Pipeline Failed ❌'
         }
     }
 }
