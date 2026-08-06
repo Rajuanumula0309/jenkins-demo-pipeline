@@ -7,7 +7,7 @@ pipeline {
     }
 
     triggers {
-        pollSCM('H/5 *')
+        pollSCM('H/5 *')  // prati 5 min ki GitHub check chestundi
     }
 
     stages {
