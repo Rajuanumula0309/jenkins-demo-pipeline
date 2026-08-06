@@ -25,8 +25,8 @@ node {
         echo "Deploying ${APP_NAME} to ${env.BRANCH_NAME}"
         // Branch batti deploy location decide cheyadam
         if(env.BRANCH_NAME == 'main') {
-            bat "echo Deploying to PROD Server"
-        } else {
+            bat "echo Deploying to PROD server"
+        }  else {
             bat "echo Deploying to DEV Server"
         }
     }
