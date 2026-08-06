@@ -7,7 +7,7 @@ pipeline {
     }
 
     triggers {
-        cron('H */4 * * *')  // 5 * undali mama - every 4 hours
+        pollSCM('H/5 *')  // every 5 minutes GitHub check chestundi
     }
 
     stages {
