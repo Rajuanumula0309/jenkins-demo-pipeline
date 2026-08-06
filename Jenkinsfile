@@ -1,17 +1,23 @@
 node {
     stage('Checkout') {
         echo '================================='
-        echo "Branch: ${env.BRANCH_NAME}"
+        echo 'Stage 1: Code Checkout from SCM'
         echo '================================='
         checkout scm
     }
 
     stage('Build') {
-        echo "Building branch: ${env.BRANCH_NAME}"
-        bat 'echo Building...'
+        echo 'Stage 2: Build'
+        bat 'echo Building project...'
     }
 
-    stage('Success') {
-        echo "Pipeline completed for ${env.BRANCH_NAME} ✅"
+    stage('Test') {
+        echo 'Stage 3: Test'
+        bat 'echo Running tests...'
+    }
+
+    stage('Deploy') {
+        echo 'Stage 4: Deploy'
+        bat 'echo Deployment success'
     }
 }
