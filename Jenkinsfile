@@ -1,39 +1,23 @@
-node {
-    // Environment variables - ekkada aina use cheyavachu
-    def APP_NAME = "jenkins-demo"
-    
-    stage('1. Checkout') {
-        echo "================================="
-        echo "Pipeline as Code Started"
-        echo "Branch: ${env.BRANCH_NAME}"
-        echo "================================="
-        checkout scm
+pipeline {
+    agent any
+    tools {
+        maven 'Maven3'  // Maven name
+        jdk 'JDK17'
     }
-
-    stage('2. Build') {
-        echo "Building ${APP_NAME}..."
-        // Windows aithe bat, Linux aithe sh
-        bat "echo mvn clean package"
-    }
-
-    stage('3. Test') {
-        echo "Running Tests..."
-        bat "echo mvn test"
-    }
-
-    stage('4. Deploy') {
-        echo "Deploying ${APP_NAME} to ${env.BRANCH_NAME}"
-        // Branch batti deploy location decide cheyadam
-        if(env.BRANCH_NAME == 'main') {
-            bat "echo Deploying to PROD server"
-        }  else {
-            bat "echo Deploying to DEV Server"
+    stages {
+        stage('2. Build with Maven') {
+            steps {
+                bat "mvn clean package -DskipTests"  // Rendu branches lo same build
+            }
         }
-    }
-    
-    stage('5. Success') {
-        echo "================================="
-        echo "Pipeline as Code COMPLETED ✅"
-        echo "================================="
+        stage('4. Deploy') {
+            steps {
+                if(env.BRANCH_NAME == 'main') {
+                    bat "echo Deploying to PROD Server"  // main lo idhi run avutundi
+                } else {
+                    bat "echo Deploying to DEV Server"   // dev lo idhi run avutundi
+                }
+            }
+        }
     }
 }
