@@ -1,14 +1,19 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven3'  // Maven name
+        maven 'Maven3'  // Jenkins lo ee name undali
         jdk 'JDK17'
     }
     stages {
-        stage('4. Deploy') {
+        stage('1. Build') {  // <-- ee stage add chey
+            steps {
+                bat "mvn clean package -DskipTests"
+            }
+        }
+        stage('2. Deploy') {
             steps {
                 echo "Deploying to ${env.BRANCH_NAME}"
-                script {  // <-- ee script block important
+                script { 
                     if(env.BRANCH_NAME == 'main') {
                         bat "echo Deploying to PROD Server"
                     } else {
